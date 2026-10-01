@@ -38,55 +38,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Function to Fetch API Data from MapTiler / OpenStreetMap
+// Function to Fetch API Data from Geocoding API
 async function fetchLocationData(query) {
     // Show Loading
     loadingDiv.classList.remove('hidden');
     errorDiv.classList.add('hidden');
 
+    const apiUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1`;
     const maptilerUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${API_KEY}`;
-    const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=geojson&addressdetails=1&limit=1`;
 
     try {
-        let response = await fetch(maptilerUrl);
-        let data = null;
+        let response = await fetch(apiUrl);
+        let data = await response.json();
 
-        // Jika MapTiler API key 403 / Forbidden / invalid, gunakan OpenStreetMap fallback
-        if (!response.ok) {
-            response = await fetch(nominatimUrl);
+        if (data && data.results && data.results.length > 0) {
+            const item = data.results[0];
+            valInput.textContent = query;
+            valNegara.textContent = item.country || 'Indonesia';
+            valProvinsi.textContent = item.admin1 || 'DKI Jakarta';
+            valKecamatan.textContent = item.admin2 || item.admin3 || item.name || 'Pusat / Distrik';
+            valLongitude.textContent = item.longitude.toFixed(6);
+            valLatitude.textContent = item.latitude.toFixed(6);
+        } else {
+            // Fallback ke MapTiler
+            let res2 = await fetch(maptilerUrl);
+            let data2 = await res2.json();
+
+            if (data2 && data2.features && data2.features.length > 0) {
+                const feature = data2.features[0];
+                const coords = feature.geometry.coordinates;
+                const details = parseGeoContext(feature);
+                valInput.textContent = query;
+                valNegara.textContent = details.country || 'Indonesia';
+                valProvinsi.textContent = details.province || 'DKI Jakarta';
+                valKecamatan.textContent = details.district || 'Pusat';
+                valLongitude.textContent = coords[0].toFixed(6);
+                valLatitude.textContent = coords[1].toFixed(6);
+            } else {
+                showError(`Lokasi "${query}" tidak ditemukan.`);
+                return;
+            }
         }
-
-        data = await response.json();
-
-        if (!data || !data.features || data.features.length === 0) {
-            showError(`Lokasi "${query}" tidak ditemukan.`);
-            return;
-        }
-
-        const feature = data.features[0];
-        const coordinates = feature.geometry.coordinates; // [longitude, latitude]
-        const lng = coordinates[0];
-        const lat = coordinates[1];
-
-
-        // Extract Negara, Provinsi, Kecamatan
-        const details = parseGeoContext(feature);
-
-        // Display Data
-        valInput.textContent = query;
-        valNegara.textContent = details.country || 'Indonesia';
-        valProvinsi.textContent = details.province || 'DKI Jakarta';
-        valKecamatan.textContent = details.district || 'Pusat / Gambir';
-        valLongitude.textContent = lng.toFixed(6);
-        valLatitude.textContent = lat.toFixed(6);
 
         loadingDiv.classList.add('hidden');
-
 
     } catch (err) {
         showError('Gagal mengambil data dari API: ' + err.message);
     }
 }
+
 
 // Helper Extract Geo Context
 function parseGeoContext(feature) {
