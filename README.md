@@ -29,3 +29,10 @@ Interface menerima input nama lokasi dan menampilkan data berikut:
 1. Open `index.html` di browser.
 2. Masukkan nama lokasi di kolom input (contoh: `Jakarta`).
 3. Klik tombol **Cari Data API**.
+
+---
+
+## 📝 Catatan Tambahan
+- Data disajikan secara *real-time* dari MapTiler Geocoding Service API.
+- Project dikembangkan untuk Pemrograman Web Services (PWS) NIM: **241**.
+
