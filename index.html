@@ -15,10 +15,11 @@
         <div class="card search-box">
             <label for="locationInput"><strong>Lokasi:</strong></label>
             <div class="input-group">
-                <input type="text" id="locationInput" placeholder="Masukkan nama lokasi (contoh: Jakarta, Bandung, Surabaya)..." value="Jakarta">
-                <button id="searchBtn">Cari Data API</button>
+                <input type="text" id="locationInput" placeholder="Masukkan nama lokasi (contoh: Jakarta, Bandung, Surabaya)..." value="Jakarta" autocomplete="off" required aria-label="Masukkan nama lokasi">
+                <button id="searchBtn" type="button">Cari Data API</button>
             </div>
         </div>
+
 
         <!-- Status Loading & Error -->
         <div id="loading" class="status-msg hidden">Mengambil data dari MapTiler API...</div>
