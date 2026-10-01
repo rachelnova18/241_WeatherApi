@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>241_WeatherApi - MapTiler API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Aplikasi Weather & Geocoding API (241_WeatherApi)</h2>
+        <p class="subtitle">Tugas Pemrograman Web Services (PWS) - NIM 241</p>
+
+        <!-- Form Input Lokasi -->
+        <div class="card search-box">
+            <label for="locationInput"><strong>Lokasi:</strong></label>
+            <div class="input-group">
+                <input type="text" id="locationInput" placeholder="Masukkan nama lokasi (contoh: Jakarta, Bandung, Surabaya)..." value="Jakarta">
+                <button id="searchBtn">Cari Data API</button>
+            </div>
+        </div>
+
+        <!-- Status Loading & Error -->
+        <div id="loading" class="status-msg hidden">Mengambil data dari MapTiler API...</div>
+        <div id="error" class="status-msg error-msg hidden"></div>
+
+        <!-- Output Data API -->
+        <div id="resultCard" class="card result-card">
+            <h3>Hasil Data GET API:</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Lokasi (Input)</th>
+                    <td id="valInput">-</td>
+                </tr>
+                <tr>
+                    <th>Negara</th>
+                    <td id="valNegara">-</td>
+                </tr>
+                <tr>
+                    <th>Provinsi</th>
+                    <td id="valProvinsi">-</td>
+                </tr>
+                <tr>
+                    <th>Kecamatan</th>
+                    <td id="valKecamatan">-</td>
+                </tr>
+                <tr>
+                    <th>Longitude</th>
+                    <td id="valLongitude">-</td>
+                </tr>
+                <tr>
+                    <th>Latitude</th>
+                    <td id="valLatitude">-</td>
+                </tr>
+            </table>
+
+            <!-- Display Raw Response / Postman GET Format -->
+            <div class="json-box">
+                <h4>Raw Response JSON (Postman / Browser GET):</h4>
+                <pre><code id="jsonOutput">// Data API akan tampil di sini</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
