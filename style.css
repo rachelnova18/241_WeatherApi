@@ -110,22 +110,7 @@ h2 {
     color: #0f172a;
 }
 
-.json-box h4 {
-    margin-bottom: 8px;
-    color: #475569;
-}
-
-pre {
-    background-color: #1e293b;
-    color: #38bdf8;
-    padding: 14px;
-    border-radius: 6px;
-    overflow-x: auto;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.85rem;
-    max-height: 250px;
-}
-
 .hidden {
     display: none !important;
 }
+

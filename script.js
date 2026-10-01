@@ -13,7 +13,7 @@ const valProvinsi = document.getElementById('valProvinsi');
 const valKecamatan = document.getElementById('valKecamatan');
 const valLongitude = document.getElementById('valLongitude');
 const valLatitude = document.getElementById('valLatitude');
-const jsonOutput = document.getElementById('jsonOutput');
+
 
 // Event Listener
 document.addEventListener('DOMContentLoaded', () => {
@@ -78,10 +78,8 @@ async function fetchLocationData(query) {
         valLongitude.textContent = lng.toFixed(6);
         valLatitude.textContent = lat.toFixed(6);
 
-        // Display Raw JSON Output (Untuk screenshot/Postman view)
-        jsonOutput.textContent = JSON.stringify(data, null, 2);
-
         loadingDiv.classList.add('hidden');
+
 
     } catch (err) {
         showError('Gagal mengambil data dari API: ' + err.message);
