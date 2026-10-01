@@ -37,22 +37,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Function to Fetch API Data from MapTiler
+// Function to Fetch API Data from MapTiler / OpenStreetMap
 async function fetchLocationData(query) {
     // Show Loading
     loadingDiv.classList.remove('hidden');
     errorDiv.classList.add('hidden');
 
-    const apiUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${API_KEY}`;
+    const maptilerUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${API_KEY}`;
+    const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=geojson&addressdetails=1&limit=1`;
 
     try {
-        let response = await fetch(apiUrl);
+        let response = await fetch(maptilerUrl);
         let data = null;
 
+        // Jika MapTiler API key 403 / Forbidden / invalid, gunakan OpenStreetMap fallback
         if (!response.ok) {
-            // Fallback request ke Nominatim jika key MapTiler limit/error
-            const fallbackUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=geojson&addressdetails=1&limit=1`;
-            response = await fetch(fallbackUrl);
+            response = await fetch(nominatimUrl);
         }
 
         data = await response.json();
@@ -66,6 +66,7 @@ async function fetchLocationData(query) {
         const coordinates = feature.geometry.coordinates; // [longitude, latitude]
         const lng = coordinates[0];
         const lat = coordinates[1];
+
 
         // Extract Negara, Provinsi, Kecamatan
         const details = parseGeoContext(feature);
