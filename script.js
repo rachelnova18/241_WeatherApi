@@ -1,5 +1,6 @@
 // MapTiler API Key
-const API_KEY = 'd501GZ1G89jS1OaQc69A'; // Key MapTiler
+const API_KEY = '3fMhg8HBafjMTdP5OrpG'; // Key MapTiler Resmi
+
 
 // DOM Elements
 const locationInput = document.getElementById('locationInput');
